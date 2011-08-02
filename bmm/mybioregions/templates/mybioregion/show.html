@@ -1,0 +1,117 @@
+{% extends 'common/panel.html' %}
+{% load humanize %}
+{% block title %}{{instance.name}}{% endblock title %}
+{% block panel %}
+
+<script type="text/javascript">
+    lingcod.onShow(function(){
+      {% if instance.satisfied %}
+        $('#confirm').hide();
+      {% else %}
+        $('#results').hide();
+        $('#button_yes').click( function() {
+            $('#confirm').hide();
+            $('#results').show();
+        });
+        $('#button_no').click( function() {
+            var uid = '{{instance.uid}}';
+            //a = lingcod.editors[0].workspace.actions.getByTitle('Edit');
+            a = lingcod.editors[0].workspace.featureClasses.getById('mybioregions_mybioregion');
+            console.log(a);
+            /*
+            $.each(a, function (i, action) {
+                console.log(action.getUrl(uid));
+            });
+            */
+        });
+      {% endif %}
+    });
+</script>
+    
+
+<h1>The <em>{{instance.name}}</em> Bioregion</h1>
+
+<style type="text/css">
+    div.box > ul > li { font-size: 12px; }
+</style>
+        
+    {% if instance.done %}
+        <div id="confirm">
+            <h2> Take a minute to explore the map of your bioregion.</h2>
+            <h2> Are you satisfied with result? </h2>
+            <div> <a class="button" id="button_yes"><span>Yes, Proceed to Reports</span></a> </div>
+            <div> <a class="button" id="button_no"><span>No, Continue Editing</span></a> </div>
+        </div>
+
+        <div id="results" class="tabs">
+        <ul>
+            <li><a href="#intro"><span>Introduction</span></a></li>
+            <li><a href="#summary"><span>Summary</span></a></li>
+            <li><a href="#vulnerabilities"><span>Vulnerabilities</span></a></li>
+        </ul>
+        <div id="intro">
+            <h2>Reports</h2>
+            <div class="box">
+                <p>The <strong>Summary reports</strong> provide information such as population, poverty, and resource endowments related to your bioregion.</p>
+                <p>The <strong>Vulnerabilites reports</strong> provide information related to climate change, development pressure, water resource limitations, and food scarcity.</p>
+            </div>
+
+            {% if instance.description %}
+            <h2>Description</h2>
+            <div class="box">
+                <p>{{instance.description}}</p>
+            </div>
+            {% endif %}
+
+            <h2>Input Parameters</h2>
+            <div class="box">
+                <ul>
+                    <li> Starting Point (lat, lon): {{ instance.input_starting_point.1|floatformat:3 }}, {{ instance.input_starting_point.0|floatformat:3 }}</li>
+                    <li> Temperature Relative Weighting: {{ instance.input_temp_weight }} / 100</li>
+                    <li> Precipitation Relative Weighting: {{ instance.input_precip_weight }} / 100</li>
+                    <li> Vegetation Relative Weighting: {{ instance.input_biomass_weight }} / 100</li>
+                    <li> Language Relative Weighting: {{ instance.input_lang_weight }} / 100</li>
+                    <li> Elevation Relative Weighting: {{ instance.input_elev_weight }} / 100</li>
+                    <li> Marine Relative Weighting: {{ instance.input_marine_weight }} / 100</li>
+                    <li> Bioregion Size: {{ instance.input_bioregion_size }} </li>
+                </ul>
+            </div>
+        </div>
+        <div id="summary" class="tabs">
+            <ul>
+                <li><a href="#summary_intro"><span>Intro</span></a></li>
+                <li><a href="{% url summary_analysis instance.pk %}"><span>General</span></a></li>
+                <li><a href="{% url summary_analysis instance.pk %}"><span>Language</span></a></li>
+                <li><a href="{% url summary_analysis instance.pk %}"><span>Eco-Regions</span></a></li>
+                <li><a href="{% url summary_analysis instance.pk %}"><span>Agriculture</span></a></li>
+            </ul>
+            <div id="summary_intro">
+                <h2>Summary Reports</h2>
+                <div class="box">
+                    <p>The <strong>General reports</strong> provide estimates of size, population, temperature, and precipitation for your bioregion.</p>
+                    <p>The <strong>Language reports</strong> provide information related to what languages are currently spoken within your bioregion and what languages have historically been spoken.</p>
+                    <p>The <strong>Eco-Regions reports</strong> provide information related to ...</p>
+                    <p>The <strong>Agriculture reports</strong> provide information related to ...</p>
+                </div>
+            </div>
+        </div>
+        <div id="vulnerabilities" class="tabs">
+            <ul>
+                <li><a href="#vulnerabilities_intro"><span>Intro</span></a></li>
+                <li><a href="{% url vulnerability_analysis instance.pk %}"><span>Climate</span></a></li>
+                <li><a href="{% url vulnerability_analysis instance.pk %}"><span>Human</span></a></li>
+                <li><a href="{% url vulnerability_analysis instance.pk %}"><span>Social</span></a></li>
+            </ul>
+            <div id="vulnerabilities_intro">
+                <h2>Vulnerabilities Reports</h2>
+                <div class="box">
+                    <p>The <strong>Climage reports</strong> provide information related to ...</p>
+                    <p>The <strong>Human reports</strong> provide information related to ...</p>
+                    <p>The <strong>Social reports</strong> provide information related to ...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock panel %}
