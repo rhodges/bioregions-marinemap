@@ -1,0 +1,237 @@
+{% extends 'common/panel.html' %}
+{% load humanize %}
+{% block title %}{{instance.name}}{% endblock title %}
+{% block panel %}
+
+<script type="text/javascript">
+    lingcod.onShow(function(){
+      {% if instance.satisfied %}
+        $('#confirm').hide();
+      {% else %}
+        $('#results').hide();
+        $('#button_yes').click( function() {
+            var url = "/mybioregions/finished/{{instance.uid}}/";
+            $.post(url, function(data) {
+                //on success ... nothing yet
+            });
+            $('#confirm').hide();
+            $('#results').show();
+        });
+        $('#button_no').click( function() {
+            var uid = '{{instance.uid}}';
+            var uri_template = "/features/mybioregion/{uid}/form/";
+            var url = uri_template.replace('{uid}',uid);
+            var panelOpts = {
+                loading_msg: 'Loading Bioregion Form',
+                showClose: true
+            };
+            var panel = lingcod.editors[0].panel;
+
+            function setupForm(form, options){
+                options = options || {};
+                var el = panel.getEl();
+                el.find('.close').hide();
+                el.find('input[type=submit]').hide();
+                var manipulator;
+
+                opts = {
+                    // Forcing submission of content thru iframe all the time, no
+                    // matter whether a file upload field is associated with the 
+                    // feature. I hate using iframes for this, but they are 
+                    // necessary for uploads so we may as well be consistent in 
+                    // their use with all forms.
+                    iframe: true,
+                    beforeSubmit: function(a,b,c) {
+                        panel.spin('Saving changes');
+                        $(that).trigger('saving', ["Saving changes"]);
+                        return true;
+                    },
+                    success: function(text, status, req, formel){
+                        $(that).trigger('doneSaving');
+                        if(text.match('<form') || text.match('<FORM')){ // for ie8
+                            // Validation error
+                            // Set default panel options. panel is an instance var
+                            var panelOpts = {
+                                loading_msg: 'Loading form', 
+                                // loading_msg: 'Loading ' + action.title, 
+                                // ^^^ action.title was causing js error and stalling the app 
+                                // when a form was returned with validation errors
+                                showClose: true
+                            };
+                            panelOpts['showCloseButton'] = false;
+                            panelOpts['success'] = function(){
+                                lingcod.setupForm = function(){
+                                    alert('error:setupForm called after clearing?');
+                                };
+                            }
+                            // set a setupForm function that can be called by content
+                            // of the panel
+                            lingcod.setupForm = function(form){
+                                setupForm(form);
+                            }
+                            panel.close();
+                            panel.stopSpinning();
+                            panel.showText(text, panelOpts);
+                        }else{
+                            panel.close();
+                            panel.stopSpinning();
+                            var info = jQuery.parseJSON(text);
+                            if(info['status'] != 200 && info['status'] != 201){
+                                tree.refresh();
+                                alert('There was an error saving your feature.');
+                            }else{
+                                $(lingcod.editors[0]).trigger('edit', [text, status, req, this]);
+                            }
+                        }
+                    }
+                };
+                var a = $(form).attr('action');
+                if(typeof a !== 'undefined') {
+                    if(a[a.length - 1] !== '/'){
+                        // For the benefit of IE
+                        $(form).attr('action', a + '/');
+                    }
+                }
+                $(form).ajaxForm(opts);
+
+                el.find('.submit_button').click(function(){
+                    form.trigger('submit');
+                });
+                el.find('.cancel_button').click(function(){
+                    if(previouslySelected){
+                        if(jQuery.isArray(previouslySelected)){
+                            jQuery.each(previouslySelected, function(i,kmlObject){
+                                kmlObject.setVisibility(true);                    
+                            });
+                        }else{
+                            previouslySelected.setVisibility(true);                    
+                        }
+                    }
+                    if(manipulator){
+                        manipulator.destroy();
+                    }
+                    panel.close();
+                    if(options.cancel){
+                        options.cancel();
+                    }
+                });
+                var tabs = el.find('.tabs');
+                tabs.bind('tabsshow', function(e){
+                    var div = $(this).parent().parent().parent();
+                    // scroll to 1, then 0 for the benefit of dumb firefox
+                    div.scrollTop(1);
+                    div.scrollTop(0);
+                });
+                tabs.tabs('select', '#PanelAttributes');
+                tabs.tabs('disable', 0);
+                tabs.find('> .ui-tabs-nav').hide();            
+                if(tabs && tabs.length && $('.errorlist').length){
+                    tabs.tabs('select', '#PanelAttributes');
+                }
+                panel.show();
+                if($('#PanelAttributes').length){
+                    $('#PanelAttributes').parent().parent().parent().parent().scrollTop(1).scrollTop(0);                
+                }
+
+                $(that).trigger('form_shown', [panel, null]);
+            };
+            ///////////////////////////END setupForm///////////////////////
+
+            // bind the setupForm function that can be called by content
+            // of the panel
+            lingcod.setupForm = function(form){
+                setupForm(form);
+            }
+            panel.showUrl(url, panelOpts);
+        });
+      {% endif %}
+    });
+</script>
+    
+
+<h1>The <em>{{instance.name}}</em> Bioregion</h1>
+
+<style type="text/css">
+    div.box > ul > li { font-size: 12px; }
+</style>
+        
+    {% if instance.done %}
+        <div id="confirm">
+            <h2> Take a minute to explore the map of your bioregion.</h2>
+            <h2> Are you satisfied with result? </h2>
+            <div> <a class="button" id="button_yes"><span>Yes, Proceed to Reports</span></a> </div>
+            <div> <a class="button" id="button_no"><span>No, Continue Editing</span></a> </div>
+        </div>
+
+        <div id="results" class="tabs">
+        <ul>
+            <li><a href="#intro"><span>Introduction</span></a></li>
+            <li><a href="#summary"><span>Summary</span></a></li>
+            <li><a href="#vulnerabilities"><span>Vulnerabilities</span></a></li>
+        </ul>
+        <div id="intro">
+            <h2>Reports</h2>
+            <div class="box">
+                <p>The <strong>Summary reports</strong> provide information such as population, poverty, and resource endowments related to your bioregion.</p>
+                <p>The <strong>Vulnerabilites reports</strong> provide information related to climate change, development pressure, water resource limitations, and food scarcity.</p>
+            </div>
+
+            {% if instance.description %}
+            <h2>Description</h2>
+            <div class="box">
+                <p>{{instance.description}}</p>
+            </div>
+            {% endif %}
+
+            <h2>Input Parameters</h2>
+            <div class="box">
+                <ul>
+                    <li> Starting Point (lat, lon): {{ instance.input_starting_point.1|floatformat:3 }}, {{ instance.input_starting_point.0|floatformat:3 }}</li>
+                    <li> Temperature Relative Weighting: {{ instance.input_temp_weight }} / 100</li>
+                    <li> Precipitation Relative Weighting: {{ instance.input_precip_weight }} / 100</li>
+                    <li> Vegetation Relative Weighting: {{ instance.input_biomass_weight }} / 100</li>
+                    <li> Language Relative Weighting: {{ instance.input_lang_weight }} / 100</li>
+                    <li> Elevation Relative Weighting: {{ instance.input_elev_weight }} / 100</li>
+                    <li> Marine Relative Weighting: {{ instance.input_marine_weight }} / 100</li>
+                    <li> Bioregion Size: {{ instance.input_bioregion_size }} </li>
+                </ul>
+            </div>
+        </div>
+        <div id="summary" class="tabs">
+            <ul>
+                <li><a href="#summary_intro"><span>Intro</span></a></li>
+                <li><a href="{% url general_summary_analysis instance.pk %}"><span>Overview</span></a></li>
+                <li><a href="{% url language_summary_analysis instance.pk %}"><span>Language</span></a></li>
+                <li><a href="{% url ecoregions_summary_analysis instance.pk %}"><span>Resources</span></a></li>
+                <li><a href="{% url agriculture_summary_analysis instance.pk %}"><span>Agriculture</span></a></li>
+            </ul>
+            <div id="summary_intro">
+                <h2>Summary Reports</h2>
+                <div class="box">
+                    <p>The <strong>Overview reports</strong> provide estimates of size, population, temperature, and precipitation for your bioregion.</p>
+                    <p>The <strong>Language reports</strong> provide information related to what languages are currently spoken within your bioregion and what languages have historically been spoken.</p>
+                    <p>The <strong>Resources reports</strong> provide information related to ...</p>
+                    <p>The <strong>Agriculture reports</strong> provide information related to ...</p>
+                </div>
+            </div>
+        </div>
+        <div id="vulnerabilities" class="tabs">
+            <ul>
+                <li><a href="#vulnerabilities_intro"><span>Intro</span></a></li>
+                <li><a href="{% url climate_vulnerability_analysis instance.pk %}"><span>Climate Change</span></a></li>
+                <li><a href="{% url socioeconomic_vulnerability_analysis instance.pk %}"><span>Socio-Economic</span></a></li>
+                <li><a href="{% url hazards_vulnerability_analysis instance.pk %}"><span>Natural Hazards</span></a></li>
+            </ul>
+            <div id="vulnerabilities_intro">
+                <h2>Vulnerabilities Reports</h2>
+                <div class="box">
+                    <p>The <strong>Climage reports</strong> provide information related to ...</p>
+                    <p>The <strong>Human reports</strong> provide information related to ...</p>
+                    <p>The <strong>Social reports</strong> provide information related to ...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock panel %}

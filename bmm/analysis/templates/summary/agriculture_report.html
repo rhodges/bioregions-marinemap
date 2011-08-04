@@ -1,0 +1,36 @@
+{% extends 'common/panel.html' %}
+
+{% block panel %}
+{% load humanize %}
+{% load analysis_extras %}
+
+<h3>Agicultural Characteristics</h3>
+<div class='freetext'>
+<p>
+<table  style='width:430px' class='analysis_report_container'>
+    <tbody>
+        <tr class="grey">
+            <td colspan='2'><b>Proportion Suitable for Agriculture</b></td>
+        </tr>
+        <tr>
+            <td colspan='2'>{{soil_suitability|percentage:0}}</td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        <tr class="grey">
+            <td colspan='2'><b>Proportion Equipped for Irrigation</b></td>
+        </tr>
+        <tr>
+            <td colspan='2'>{{default_value}}</td>
+        </tr>
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+    </tbody>
+</table>
+</div>
+
+<style type="text/css">
+h3 { font-weight: bold; }
+</style>
+
+{% endblock panel %}
