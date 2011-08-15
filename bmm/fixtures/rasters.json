@@ -1,0 +1,173 @@
+[
+  {
+    "pk": 12,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "annual_precipitation",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/ann_prec_mw"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "annual_temperature",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/ann_temp_mw"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "population_2005",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/pop05_mw"
+    }
+  }, 
+  {
+    "pk": 15,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "max_temp",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/max_temp_mw"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "min_temp",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/min_temp_mw"
+    }
+  },
+  {
+    "pk": 17, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "npp_terr", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/npp_mw"
+    }
+  },
+  {
+    "pk": 25, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "population_2015", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/pop15_mw"
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "soil_suitability", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/suit_mw"
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "irrig_equipped", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/irrig_mw"
+    }
+  },  
+  {
+    "pk": 28, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "npp_ocn", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/summary/npp_ocn"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "underweight_children", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/uw5yo_mw"
+    }
+  },   
+  {
+    "pk": 30, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "water_stress", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/wtrstrs_mw2"
+    }
+  },
+  {
+    "pk": 31, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "human_influence_index", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/hmnimpct2_mw"
+    }
+  },  
+  {
+    "pk": 32, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "human_footprint", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/hmnft_mw"
+    }
+  },  
+  {
+    "pk": 36, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "human_consumption", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/hapctnpp_mw"
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "raster_stats.rasterdataset", 
+    "fields": {
+      "type": "continuous", 
+      "name": "human_presence", 
+      "full_name": "", 
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/bltuplnd_mw"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "raster_stats.rasterdataset",
+    "fields": {
+      "type": "continuous",
+      "name": "climate_impact",
+      "full_name": "",
+      "filepath": "/usr/local/apps/bioregions/data/reports/vulnerabilities/clmtimpct_mw"
+    }
+  }
+
+]
