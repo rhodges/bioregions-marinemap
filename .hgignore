@@ -1,0 +1,17 @@
+syntax: glob
+*.pyc
+bmm/settings_local.py
+bmm.log
+data/reports/*
+data/resamp_moll/*
+data/*.zip
+*.orig
+mediaroot/*
+wsgi.py
+data/*
+env/*
+*non-versioned*
+*.log
+data.tar.gz
+bmm/ids
+
