@@ -1,0 +1,266 @@
+{% extends "common/panel.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block panel %}
+<script type="text/javascript" charset="utf-8">
+    lingcod.onShow(function(){
+        lingcod.setupForm($('#featureform'));
+
+        var step = 1;
+        var max_step = 3;
+        function validate(step) {
+            if (step == 1) {
+                if ($('#id_input_starting_point').val() == '') {
+                    alert("You must set a starting point to proceed to step 2");
+                    return false;
+                }
+            }
+            return true
+        }; 
+
+        function wizard(action) {
+            if (step > 1 && action == 'prev') {
+                step -= 1;
+            }
+            if (step < max_step && action == 'next') {
+                if (validate(step)) {
+                    step += 1;
+                }
+            }
+            $('div.step').each(function(index) {
+                $(this).hide();
+            });
+
+            $('div#step' + step).show();
+
+            if (step == 1) {
+                $('#button_prev').hide();
+            } else {
+                $('#button_prev').show();
+            }
+
+            if (step == max_step) {
+                $('#button_next').hide();
+                $('.submit_button').show();
+            } else {
+                $('#button_next').show();
+                $('.submit_button').hide();
+            }
+        };
+        $('#button_prev').click( function() { wizard('prev'); });
+        $('#button_next').click( function() { wizard('next'); });
+        wizard();
+
+        $('ul.errorlist').each( function() {
+                $('div#error_bar').html("<ul class='errorlist'><li>We encountered an error while processing your bioregion. Can you recheck the steps and make sure you've filled in all the required information?</li></ul>");
+        });
+
+        $('img.paraminfo').each( function() {
+            var id = $(this).attr('id');
+            var text = "none";
+            switch(id) {
+                case 'info_temp':
+                    text = "Temperature takes into account both minimum temperature and temperature range.";
+                    break;
+                case 'info_precip':
+                    text = "Precipitation takes into account the average annual rainfall.";
+                    break;
+                case 'info_biomass':
+                    text = "Vegetation takes into account the total biomass of the region.";
+                    break;
+                case 'info_lang':
+                    text = "Language takes into account the primary spoken language in a region.";
+                    break;
+                case 'info_elev':
+                    text = "Elevation takes into account the land elevation above sea level";
+                    break;
+                case 'info_marine':
+                    text = "Marine takes into account sea surface temperature, bathymetry and distance to shoreline.";
+                    break;
+                case 'info_dwater':
+                    text = "Proximity to Major Waterbodies takes into account the distance from lakes and majors rivers.";
+                    break;
+                default:
+                    $(this).hide();
+            }
+            if (text!='none') {
+                $(this).qtip({
+                    content: text, 
+                    show: { 
+                        delay: 0,
+                        when: { event: 'mouseover' } 
+                    },
+                    hide: { when: {event: 'mouseleave'} },
+                    style: { name: 'light' }
+                });
+            }
+        });
+            
+    });
+</script>
+
+<style type="text/css">
+div .field > label { font-size: 12px; display: inline; }
+div .step { 
+    -moz-box-shadow: 5px 5px 5px #ddd;
+    -webkit-box-shadow: 5px 5px 5px #ddd;
+    box-shadow: 5px 5px 5px #ddd; 
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -khtml-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px #ddd solid;
+    padding: 6px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    background-color: white; 
+    background-repeat: no-repeat;
+    min-height: 54px;
+}
+div .inputfield { padding-bottom: 14px; padding-left: 66px; }
+span.form-image { float: left; margin-left: -66px; }
+span.form-image > img { width:46px; height:46px; }
+</style>
+
+{% if form.media %} {{ form.media }} {% endif %}
+<h1>{{ title }}</h1>
+<form id="featureform" action="{{action}}" method="post"> 
+    {% for hidden in form.hidden_fields %}
+    <div style="display:none;">
+        {{ hidden.errors }}
+    </div>
+    {{ hidden }}
+    {% endfor %}
+
+
+  <div id="error_bar"></div>
+  
+  <div class="step" id="step1">
+    <h3> Step 1 of 3 </h3>
+    <p>First, <strong>locate your area of interest</strong> on the interactive map to the right.
+    <p>Second, <strong>set your starting point</strong> 
+       by clicking the button below, then clicking the location on the map. </p>
+    <div id="start">
+        <div class="field required">
+            <!-- {{ form.input_starting_point.label_tag }} -->
+            {{ form.input_starting_point.errors }}
+            {{ form.input_starting_point }}            
+        </div>
+    </div>
+    <p><a id="displayText" href="javascript:toggleDiv('starting_point');">What is the starting point?</a>
+    <div id="starting_point" style="display: none">
+      <p>The starting point is the "center" of your bioregion; the hub which embodies the character of your bioregion. 
+         The resulting bioregion map will be drawn to include nearby land that exhibits similar characteristics.</p>
+    </div>
+    <p><a id="displayText" href="javascript:toggleDiv('GoogleEarth');">New to Google Earth?</a>
+    <div id="GoogleEarth" style="display: none">
+      <p>To move around the map, use the navigation controls in the upper-right corner of the map. 
+         You can also use the mouse and/or keyboard to navigate; 
+         for more information, please visit the <a target="_blank" href="http://earth.google.com/support/bin/answer.py?answer=176674#zoom_mouse">Google Earth documentation</a>.</p>
+    </div>
+    
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script type="text/javascript">
+  function toggleDiv(divId) {
+     $("#"+divId).toggle();
+  }
+  </script>
+
+        
+      
+  </div>
+
+  <div class="step" id="step2">
+    <h3> Step 2 of 3 </h3>
+      <p> Specify the <em>relative importance</em> of the following parameters; in other words, to what extent do these parameters define your bioregion? </p>
+      <p> For example, if you slide the temperature parameter to the right, your bioregion shape will be more likely to include areas with similar temperature characteristics to your starting point. </p>
+    <div class="inputfield" id="temp">
+        <div class="field required">
+            {{ form.input_temp_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_temp" class="paraminfo"/>
+            {{ form.input_temp_weight.errors }}
+            {{ form.input_temp_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="precip">
+        <div class="field required">
+            {{ form.input_precip_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_precip" class="paraminfo"/>
+            {{ form.input_precip_weight.errors }}
+            {{ form.input_precip_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="veg">
+        <div class="field required">
+            {{ form.input_biomass_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_biomass" class="paraminfo"/>
+            {{ form.input_biomass_weight.errors }}
+            {{ form.input_biomass_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="lang">
+        <div class="field required">
+            {{ form.input_lang_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_lang" class="paraminfo"/>
+            {{ form.input_lang_weight.errors }}
+            {{ form.input_lang_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="elev">
+        <div class="field required">
+            {{ form.input_elev_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_elev" class="paraminfo"/>
+            {{ form.input_elev_weight.errors }}
+            {{ form.input_elev_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="dwater">
+        <div class="field required">
+            {{ form.input_dwater_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_dwater" class="paraminfo"/>
+            {{ form.input_dwater_weight.errors }}
+            {{ form.input_dwater_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="marine">
+        <div class="field required">
+            {{ form.input_marine_weight.label_tag }} <img src="/media/bmm/img/info.png" id="info_marine" class="paraminfo"/>
+            {{ form.input_marine_weight.errors }}
+            {{ form.input_marine_weight }}            
+        </div>
+    </div>
+    <div class="inputfield" id="size">
+        <div class="field required">
+            {{ form.input_bioregion_size.label_tag }} <img src="/media/bmm/img/info.png" id="info_size" class="paraminfo"/>
+            {{ form.input_bioregion_size.errors }}
+            <br/>
+            {{ form.input_bioregion_size }}            
+        </div>
+    </div>
+  </div>
+
+<div class="step" id="step3">
+    <h3> Step 3 of 3 </h3>
+    <p> Provide a name to identify your bioregion </p>
+    <div class="field required">
+        {{ form.name.label_tag }}
+        {{ form.name.errors }}
+        {{ form.name }}            
+    </div>
+    <p> Optionally, you may add notes and further descriptions here.  </p>
+    <div>
+        {{ form.description.label_tag }}
+        {{ form.description.errors }}
+        {{ form.description }}            
+    </div>
+</div>
+
+<p><input type="submit" value="submit"></p>
+</form>
+
+
+<div class="wizard_nav" style="width:100%">
+    <a href="#" class="button" style="float:left;" onclick="this.blur(); return false;" id="button_prev"><span>&lt; Previous</span></a>
+    <a href="#" class="button" style="float:right;" onclick="this.blur(); return false;" id="button_next"><span>Next &gt;</span></a>
+</div>
+
+<div>
+    <a href="#" class="cancel_button button red" onclick="this.blur(); return false;"><span>Cancel</span></a>
+    <a href="#" class="submit_button button" onclick="this.blur(); return false;"><span>Submit</span></a>
+</div>
+
+
+{% endblock %}
