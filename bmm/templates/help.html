@@ -1,0 +1,220 @@
+{% extends 'common/panel.html' %}
+{% load appname %}
+{% block title %}{% appname %} Help{% endblock %}
+
+{% block panel %}
+
+<link rel="stylesheet" href="{{MEDIA_URL}}screencasts/css/screencasts.css" type="text/css" media="all" title="no title" charset="utf-8">
+<link rel="stylesheet" href="{{MEDIA_URL}}common/css/typography.css" type="text/css" media="all" title="no title" charset="utf-8">
+
+<style type="text/css">
+    .tabs { font-size: 1.0em; }
+    .help_back { font-size: 0.8em; }
+</style>
+
+<div id="helptop"></div>
+<br/>
+<div class="tabs">
+    <ul>
+        <li><a href="#tutorial"><span>Tutorial</span></a></li>
+    </ul>
+    <div id="tutorial">
+        <ul>
+            <li><h2><a href="#logging_in">Logging In</a></h2></li>
+            <ul>
+                <li><a href="#registration">Registration and Logging In</a></li>
+            </ul>
+            <li><h2><a href="#basic">Basic Usage</a></h2></li>
+            <ul>
+                <li><a href="#generating">Creating Bioregions</a></li>
+                <li><a href="#editing">Editing Bioregions</a></li>
+                <li><a href="#reports">Viewing Reports</a></li>
+            </ul>
+            <li><h2><a href="#advanced">Advanced</a></h2></li>
+            <ul>
+                <li><a href="#folders">Creating Folders</a></li>
+                <li><a href="#sharing">Sharing your Bioregion</a></li>
+                <li><a href="#viewing_shared">Viewing Shared Bioregions</a></li>
+                <li><a href="#support">Help</a></li>
+            </ul>
+        </ul>
+        
+        <div>
+        <h2><a name="logging_in">Logging In</a></h2>
+            <div style="padding-left: 25px">
+                <h3><a name="registration">Registration and Logging In</a></h3>
+                <p> 
+                    If you have not yet registered for the tool, you will want to do that now.  
+                    Select the 'Register' button (top-right) and fill out the required form.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/registration_form_80.png" align="center" />
+                <p> 
+                    Once the form has been submitted, you will receive an email that enables you to activate your account.  
+                    Click on the link provided in the email and log in to the site.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/sign_in_80.png" align="center" />
+                <p> 
+                    You are now ready to create your own Bioregion.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/main_page_33.png" align="center" />
+                <p>
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+        </div>
+        
+        <div>
+        <h2><a name="basic">Basic Usage</a></h2>
+            <div style="padding-left: 25px">
+                <h3><a name="generating">Creating Bioregions</a></h3>
+                <p> 
+                    To begin creating your own bioregion, you will want to <strong>locate your home on the map</strong>.
+                    <h5>Fly Here</h5>
+                    <p>Enter the population center nearest your home into the text field and click the 'Fly Here' button.</p>
+                    <h5>Mouse Controls</h5>
+                    <p>The navigation controls in the upper-right corner of the map can be used to move around the map.  
+                    Additionally, the <a href="http://earth.google.com/support/bin/answer.py?answer=176674#zoom_mouse" target="_blank">Google Earth tutorial</a> 
+                    provides the basics of navigating the map.</p>
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/portland_33.png" align="center" />
+                <p><a class="help_back" href="#helptop">&lt;&lt;back to top</a></p>
+                <h5>Create New</h5>
+                <p> 
+                    Once you have found your home location on the map click '<strong>Create New</strong>' near the top of the left panel 
+                    and select '<strong>Bioregion</strong>' from the drop down list.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/create_bioregion_80.png" align="center" />
+                <p> 
+                    This will bring up the 'New Bioregion' form.
+                </p>
+                <p>To complete this form, you will need to navigate through three panels.</p>                
+                <p><strong>Step 1</strong> Select a Starting Point.  </p>
+                <p> Select a starting point by selecting the 'Click to Set Starting Point' button and clicking your home 
+                    location on the map.  If you wish to change the location of the placemark, simply select the placemark 
+                    with the left mouse button, holding the mouse button down as you drag the placemark to the desired location, 
+                    and release. 
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/bioregion_form_step1.png" align="center" />
+                <p><a class="help_back" href="#helptop">&lt;&lt;back to top</a></p>
+                <p><strong>Step 2</strong> Specify the relative importance of each of the parameters.
+                <p> You will want to position each of the slider bars to match the relative value you would like to assign to the given parameter.
+                <p> For instance, if Temperature should be relatively consistent throughout your bioregion you will want to assign a high value
+                    to the Temperature parameter (slide the indicator to the right).  </p>
+                <p> If, on the other hand, spoken Language need not be homogenous throughout your bioregion you will want to assign a low value
+                    to the Human Language parameter (slide the indicator to the left).  </p>
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/bioregion_form_step2_alt.png" align="center" />
+                <p><a class="help_back" href="#helptop">&lt;&lt;back to top</a></p>
+                <p><strong>Step 3</strong> Provide a Name for your bioregion, and optionally a description. 
+                <p>Select 'Submit' and wait while the application generates your bioregion.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/bioregion_form_step3_alt.png" align="center" />
+                <p><a class="help_back" href="#helptop">&lt;&lt;back to top</a></p>
+            </div>
+            
+            <div style="padding-left: 25px">
+                <h3><a name="editing">Editing Bioregions</a></h3>
+                <p> 
+                    Naturally, you might want to experiment with the parameters or the starting location or even change the name or description of your Bioregion.  
+                    In addition to creating new bioregions, you may also edit a bioregion by selecting your bioregion in the left panel and selecting Edit as shown here:
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/edit_80.png" align="center" />
+                <p> 
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+                
+            </div>
+            
+            <div style="padding-left: 25px">
+                <h3><a name="reports">Viewing Reports</a></h3>
+                <p> 
+                    After you are happy with your bioregion results you have the option of running reports on your shape through the Reports panel.  
+                    Select 'Reports' or double click your bioregion to bring up the Reports panel. 
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/attributes_now_reports.png" align="center" />
+                <p> 
+                    From here you can generate various reports by clicking on either Summary or Vulnerabilities.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/reports2.png" align="center" />
+                <p>
+                    Generate Summary reports by selecting Overview, Language, or Natural Resources.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/summary.png" align="center" />
+                <p>
+                    Generate Vulnerability reports by selecting Climate Change, Socio-Economic, or Natural Hazards.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/vulnerabilities.png" align="center" />
+                <p> 
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+        </div>
+        
+        <div>
+        <h2><a name="advanced">Advanced</a></h2>
+            <div style="padding-left: 25px">
+                <h3><a name="folders">Creating Folders</a></h3>
+                <p> 
+                    If you are interested in creating multiple bioregions and managing them in different folders, you can create folders through the 'Create New' menu.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/create_folder_80.png" align="center" />
+                <p> 
+                    Once you have created a folder you may select one or more bioregion and drag them into (or out of) your folders.
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+            
+            <div style="padding-left: 25px">
+                <h3><a name="sharing">Sharing your Bioregion</a></h3>
+                <p> 
+                    You are also encouraged to share your final bioregions with others at the Convening.  
+                    To share with other registered users, select your bioregion, click Edit, and then Share.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/edit_share_80.png" align="center" />
+                <p> 
+                    Select the group you wish to share your bioregion with and submit.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/share_with_group_2.png" align="center" />
+                <p> 
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+            
+            <div style="padding-left: 25px">
+                <h3><a name="viewing_shared">Viewing Shared Bioregions</a></h3>
+                <p> 
+                    You can view shapes that others have shared with you through the Data and Tools panel.  
+                    To view these shared shapes, expand the Bioregions tree (and subsequent subtrees) under the Shared Bioregions section.
+                </p>
+                <img style="border:1px solid black" src="{{MEDIA_URL}}/bmm/img/help/shared_bioregions_2.png" align="center" />
+                <p> 
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+            
+            <div style="padding-left: 25px">
+                <h3><a name="support">Help</a></h3>
+                <p> 
+                    For questions that are not answered on this page, please feel free to contact us at <a href="mailto:bioregions@ecotrust.org">bioregions@ecotrust.org</a>.
+                </p>
+                <p> 
+                    <a class="help_back" href="#helptop">&lt;&lt;back to top</a>
+                </p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<script type="text/javascript">
+        lingcod.onShow(function(){
+                $('#tutorial').localScroll({
+                    target:'.marinemap-panel'
+                });
+        });
+</script>
+
+
+
+{% endblock panel %}
