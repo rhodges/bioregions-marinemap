@@ -1,0 +1,106 @@
+{% extends 'common/panel.html' %}
+{% block panel %}
+
+<style>
+    div.about {
+            font-family: "Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+            font-size: 12px;
+            margin: 10px;
+            padding: 0;
+            color: #4C4C4C;
+    }
+    .about > li { padding: 6px;}
+    .subabout > li { list-style-type: circle; } 
+</style>
+
+<div class="about">
+<h2>Bioregion Discovery Tool</h2>
+<p>
+    Create bioregional maps and receive custom reports on your region's social and ecological
+    characteristics and vulnerabilities.
+</p>
+
+<script type="text/javascript" charset="utf-8">
+
+    lingcod.onShow(function(){
+        $('#signin2').click(function(){
+            $('#signin').click();
+        });
+
+        $('#register2').click(function(){
+            $('#register').click();
+        });
+    });
+
+</script>
+
+<div>
+<p>
+<h3><a id="displayText" href="javascript:toggleDiv('toggleText');">Learn More</a></h3>
+<div id="toggleText" style="display: none">
+<p>
+The Bioregion Discovery Tool allows users to visualize and learn about the regions where we live.   
+<p>
+You will be asked to (1) prioritize a list of biophysical and cultural parameters and (2) select the place you call home on the globe.
+<p>
+Your selections will seed an analysis process that will determine your bioregion, through a cost-distance analysis that starts with 
+your selected home and examines variations between adjoining map cells. Greater variation between cells entails a greater "cost" of 
+inclusion in a region. Costs are assigned based on variations in biophysical characteristics, such as temperature, elevation, vegetation 
+and precipitation, as well as variations in language groups.
+<p>
+Once you have created a bioregion, you may run reports, drawing from numerous data sources, on the social and ecological characteristics 
+of your region, as well as its vulnerabilities to potential climate change scenarios.
+</div>
+</p>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript">
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+</script>
+</div>
+
+<div>
+<h3> Already have an account? </h3>
+<a href="#" class="button" id="signin2"><span>Sign In</span></a>
+<br/>
+<h3> Or register for a new account. </h3>
+<a href="#" class="button" id="register2"><span>Register</span></a>
+</div>
+
+
+<!-- 
+<h2> Using the Demo </h2>
+<p>
+<ul class="about">
+    <li> <strong>Sign in</strong>. You can create an account using the 'register' link or click 'sign in' to use the demo account (which uses demo:demo as the user:password). </li>
+    <li> <strong>Create New Bioregions</strong>. Under the 'Create New' menu, you'll find a link that walks you through the bioregion discovery process. </li>
+    <ul class="subabout">
+        <li> <strong>Parameters:</strong> </li>
+        <ul class="subabout">
+            <li>The population center around which the bioregion will be generated.</li>
+            <li>The weight or value that should be given to the following parameters during the bioregion generation process:</li>
+            <ul class="subabout">
+                <li>Minimum Annual Temperature</li>
+                <li>Spoken Language</li>
+                <li>Average Annual Precipitation</li>
+                <li>Biomass / Vegetation</li>
+            </ul>
+        </ul>
+        <li> <strong>Descriptors:</strong> </li>
+        <ul class="subabout">
+            <li>The Name that will be associated with your Bioregion.</li>
+            <li>An optional Description.</li>
+        </ul>
+        <li> The process will take a few seconds; after which, you will be presented with the bioregion on the map.  You can then edit the parameters of that bioregion, create additional bioregions, organize your bioregions in folders, and share your bioregions with other users of the tool.  </li>
+    </ul>
+    <li> <strong>View Reports</strong>. </li>
+    <li> <strong>View Data Layers</strong>. </li>
+    <li>The process will run in the background; you can continue to use the application and will be notified when the processing is completed. At that time you can click the 'refresh' button to view the results of the analysis. Selecting the analysis and clicking 'Attributes' will provide the details of the analysis and the resulting reserve scenario. </li>
+    
+</ul>
+</p>
+    -->
+  
+</div>
+{% endblock panel %}
